@@ -16,18 +16,18 @@ public class MainApp {
 //	BlogRepository blogRepo;
 //	@Autowired
 //	CommentRepository commentRepo;
-
+//
 //	@PostConstruct
 //	public void methods() {
-//		BlogEntity blogEntity = new BlogEntity("JAVA AND USES", "oops");
+//		BlogEntity blogEntity = new BlogEntity("Spring AND USES", "core");
 //		blogEntity = blogRepo.save(blogEntity);
 //		System.out.println("blog added with id " + blogEntity.getBlogId());
 //
-//		CommentEntity c1 = new CommentEntity("Good blog", blogEntity);
-//		CommentEntity c2 = new CommentEntity("Good UI", blogEntity);
+//		CommentEntity c1 = new CommentEntity("Good blog of spring", blogEntity);
+//		CommentEntity c2 = new CommentEntity("Good UI of spring", blogEntity);
 //		commentRepo.save(c1);
 //		commentRepo.save(c2);
-//		System.out.println("comments added with ids "+c1.getCommentId()+" & "+c2.getCommentId());
-//		
+//		System.out.println("comments added with ids " + c1.getCommentId() + " & " + c2.getCommentId());
+
 //	}
 }

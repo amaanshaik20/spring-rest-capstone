@@ -2,9 +2,7 @@ package com.dto;
 
 public class BlogDTO {
 	private int blogId;
-
 	private String blogTitle;
-
 	private String blogContent;
 
 	public BlogDTO() {
@@ -16,7 +14,7 @@ public class BlogDTO {
 		this.blogTitle = blogTitle;
 		this.blogContent = blogContent;
 	}
-	
+
 	public BlogDTO(int blogId, String blogTitle, String blogContent) {
 		super();
 		this.blogId = blogId;

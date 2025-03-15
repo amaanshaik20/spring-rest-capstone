@@ -37,9 +37,9 @@ public class BlogService {
         return new BlogDTO(blogEntity.getBlogId(), blogEntity.getBlogTitle(), blogEntity.getBlogContent());
     }
 	
-	private BlogEntity convertToEntity(BlogDTO blogDTO) {
-		return new BlogEntity(blogDTO.getBlogTitle(), blogDTO.getBlogContent());
-	}
+//	private BlogEntity convertToEntity(BlogDTO blogDTO) {
+//		return new BlogEntity(blogDTO.getBlogTitle(), blogDTO.getBlogContent());
+//	}
 	
 
 }

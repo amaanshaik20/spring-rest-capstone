@@ -15,7 +15,6 @@ import com.service.BlogService;
 
 @RestController
 @RequestMapping("/api")
-
 public class BlogController {
 	@Autowired
 	private BlogService blogService;
@@ -24,10 +23,9 @@ public class BlogController {
 	public List<BlogDTO> showAllBlogs() {
 		return blogService.getAllBlogs();
 	}
-	
-	
+
 	@GetMapping("/blogs/{blogId}")
-	public ResponseEntity<BlogDTO> getBlogById(@PathVariable("blogId") int blogId) throws BlogNotFoundException{
+	public ResponseEntity<BlogDTO> getBlogById(@PathVariable("blogId") int blogId) throws BlogNotFoundException {
 		BlogDTO blog = blogService.getBlogById(blogId);
 		return ResponseEntity.ok(blog);
 	}
