@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +20,7 @@ import com.dto.BlogDTO;
 import com.exception.BlogNotFoundException;
 import com.service.impl.BlogServiceImpl;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
@@ -31,32 +33,39 @@ public class BlogController {
 	private String message;
 	
 	@GetMapping("/profile")
+	@Tag(name="View The Active Profile")
 	public ResponseEntity<String> showRole(){
 		return ResponseEntity.ok(message);
 	}
 	
 	@GetMapping
+	@Tag(name="View All Blogs")
+	
 	public List<BlogDTO> showAllBlogs() {
 		return blogService.getAllBlogs();
 	}
 
 	@GetMapping("/{blogId}")
+	@Tag(name="View Blog By Id")
 	public ResponseEntity<BlogDTO> getBlogById(@PathVariable("blogId") int blogId) throws BlogNotFoundException {
 		BlogDTO blog = blogService.getBlogById(blogId);
 		return ResponseEntity.ok(blog);
 	}
 
 	@PostMapping
+	@Tag(name="Add A Blog")
 	public ResponseEntity<BlogDTO> createBlog(@Valid @RequestBody BlogDTO blogDto) {
 		return new ResponseEntity<>(blogService.createBlog(blogDto), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
+	@Tag(name="Update A Blog")
 	public ResponseEntity<BlogDTO> updateBlog(@PathVariable int id, @Valid @RequestBody BlogDTO blogDTO) {
 		return ResponseEntity.ok(blogService.updateBlog(id, blogDTO));
 	}
 
 	@DeleteMapping("/{id}")
+	@Tag(name="Delete A Blog")
 	public ResponseEntity<String> deleteBlog(@PathVariable int id) {
 		boolean deleteBlog = blogService.deleteBlog(id);
 		System.out.println(deleteBlog+" deleted");

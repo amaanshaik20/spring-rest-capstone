@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dto.CommentDTO;
 import com.service.impl.CommentServiceImpl;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
@@ -28,17 +29,20 @@ public class CommentController {
 		this.commentService=commentService;
 	}
 	@PostMapping("/comment")
+	@Tag(name="Add A Comment")
 	public ResponseEntity<CommentDTO> createComment(@Valid @RequestBody CommentDTO commentDTO) {
 		return new ResponseEntity<>(commentService.addComment(commentDTO), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{blogid}/comments")
+	@Tag(name="View All Comments of blog id")
 	public ResponseEntity<List<String>> showAllComments(@PathVariable int blogid) {
 		List<String> comments = commentService.getCommentsOf(blogid);
 		return ResponseEntity.ok(comments);
 	}
 	
 	@DeleteMapping("/comment/{commentid}")
+	@Tag(name="Delete A Comment")
 	public ResponseEntity<String> deleteComment(@PathVariable int commentid) {
 	    boolean isDeleted = commentService.deleteComment(commentid); 
 	    if (isDeleted) {
@@ -48,3 +52,16 @@ public class CommentController {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

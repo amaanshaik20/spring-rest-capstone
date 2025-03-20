@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dto.BlogDTO;
 import com.dto.CommentDTO;
 import com.entity.BlogEntity;
 import com.entity.CommentEntity;
@@ -23,19 +22,20 @@ public class CommentServiceImpl implements CommentService {
 	private CommentRepository commentRepo;
 
 	@Autowired
-	public CommentServiceImpl(BlogRepository blogRepository,CommentRepository commentRepo) {
-		this.blogRepository=blogRepository;
-		this.commentRepo=commentRepo;
+	public CommentServiceImpl(BlogRepository blogRepository, CommentRepository commentRepo) {
+		this.blogRepository = blogRepository;
+		this.commentRepo = commentRepo;
 	}
+
 	// Converts CommentEntity to CommentDTO
 	private CommentDTO convertToCommentDTO(CommentEntity commentEntity) {
-		return new CommentDTO(commentEntity.getCommentId(),
-				new BlogDTO(commentEntity.getBlogEntity().getBlogId(), null, null), commentEntity.getComment());
+		return new CommentDTO(commentEntity.getCommentId(), commentEntity.getBlogEntity().getBlogId(),
+				commentEntity.getComment());
 	}
 
 	// Creates a new Comment to the blog and saves it to the repository
 	public CommentDTO addComment(CommentDTO commentDTO) {
-		int id = commentDTO.getBlogDTO().getBlogId();
+		int id = commentDTO.getBlogId();
 		BlogEntity blog = blogRepository.findById(id)
 				.orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + id));
 
@@ -58,18 +58,19 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 //	public boolean deleteComment(int commentid) {
-//	    try {
-//	        CommentEntity comment = commentRepo.findById(commentid)
-//	                .orElseThrow(() -> new CommentNotFoundException("Comment not found with ID: " + commentid));
+//		try {
+//			CommentEntity comment = commentRepo.findById(commentid)
+//					.orElseThrow(() -> new CommentNotFoundException("Comment not found with ID: " + commentid));
 //
-//	        commentRepo.deleteById(comment.getCommentId()); 
-//	        return true;
-//	    } catch (CommentNotFoundException e) {
-//	        return false; 
-//	    }
+//			commentRepo.deleteById(comment.getCommentId());
+//			System.out.println("Comment deleted successfully!");
+//			return true;
+//		} catch (CommentNotFoundException e) {
+//			return false;
+//		}
 //	}
-	
-	//deletes the comment taking commentid as parameter
+
+	// deletes the comment taking commentid as parameter
 	public boolean deleteComment(int commentid) {
 		CommentEntity comment = commentRepo.findById(commentid)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found with ID: " + commentid));

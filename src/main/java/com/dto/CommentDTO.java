@@ -1,9 +1,11 @@
 package com.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CommentDTO {
-	
 	private Integer commentId;
-	private BlogDTO blogDTO;
+	private int blogId;
+	@NotBlank(message = "Comment cannot be blank")
 	private String comment;
 	
 	public CommentDTO() {
@@ -11,18 +13,17 @@ public class CommentDTO {
 	}
 	
 	
-	public CommentDTO(BlogDTO blogDTO, String comment) {
+	public CommentDTO(int blogId, String comment) {
 		super();
-		this.blogDTO = blogDTO;
+		this.blogId = blogId;
 		this.comment = comment;
 	}
 	
 	
 
-	public CommentDTO(Integer commentId, BlogDTO blogDTO, String comment) {
+	public CommentDTO(Integer commentId, int blogId, String comment) {
 		super();
 		this.commentId = commentId;
-		this.blogDTO = blogDTO;
 		this.comment = comment;
 	}
 
@@ -40,13 +41,13 @@ public class CommentDTO {
 	}
 
 
-	public BlogDTO getBlogDTO() {
-		return blogDTO;
+	public int getBlogId() {
+		return blogId;
 	}
 
 
-	public void setBlogDTO(BlogDTO blogDTO) {
-		this.blogDTO = blogDTO;
+	public void setBlogId(int blogId) {
+		this.blogId = blogId;
 	}
 
 
@@ -62,7 +63,7 @@ public class CommentDTO {
 
 	@Override
 	public String toString() {
-		return "CommentDTO [commentId=" + commentId + ", blogDTO=" + blogDTO + ", comment=" + comment + "]";
+		return "CommentDTO [commentId=" + commentId + ", blogId=" + blogId + ", comment=" + comment + "]";
 	}
 	
 	
