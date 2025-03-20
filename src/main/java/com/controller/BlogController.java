@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +46,7 @@ public class BlogController {
 
 	@GetMapping("/{blogId}")
 	@Tag(name="View Blog By Id")
-	public ResponseEntity<BlogDTO> getBlogById(@PathVariable("blogId") int blogId) throws BlogNotFoundException {
+	public ResponseEntity<BlogDTO> getBlogById(@PathVariable("blogId") Long blogId) throws BlogNotFoundException {
 		BlogDTO blog = blogService.getBlogById(blogId);
 		return ResponseEntity.ok(blog);
 	}
@@ -60,13 +59,13 @@ public class BlogController {
 
 	@PutMapping("/{id}")
 	@Tag(name="Update A Blog")
-	public ResponseEntity<BlogDTO> updateBlog(@PathVariable int id, @Valid @RequestBody BlogDTO blogDTO) {
+	public ResponseEntity<BlogDTO> updateBlog(@PathVariable Long id, @Valid @RequestBody BlogDTO blogDTO) {
 		return ResponseEntity.ok(blogService.updateBlog(id, blogDTO));
 	}
 
 	@DeleteMapping("/{id}")
 	@Tag(name="Delete A Blog")
-	public ResponseEntity<String> deleteBlog(@PathVariable int id) {
+	public ResponseEntity<String> deleteBlog(@PathVariable Long id) {
 		boolean deleteBlog = blogService.deleteBlog(id);
 		System.out.println(deleteBlog+" deleted");
 		return ResponseEntity.ok("Blog deleted successfully");

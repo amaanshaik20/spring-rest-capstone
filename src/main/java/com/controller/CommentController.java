@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,19 +37,26 @@ public class CommentController {
 
 	@GetMapping("/{blogid}/comments")
 	@Tag(name="View All Comments of blog id")
-	public ResponseEntity<List<String>> showAllComments(@PathVariable int blogid) {
+	public ResponseEntity<List<String>> showAllComments(@PathVariable Long blogid) {
 		List<String> comments = commentService.getCommentsOf(blogid);
 		return ResponseEntity.ok(comments);
 	}
 	
 	@DeleteMapping("/comment/{commentid}")
 	@Tag(name="Delete A Comment")
-	public ResponseEntity<String> deleteComment(@PathVariable int commentid) {
+	public ResponseEntity<String> deleteComment(@PathVariable Long commentid) {
 	    boolean isDeleted = commentService.deleteComment(commentid); 
 	    if (isDeleted) {
 	        return ResponseEntity.ok("Comment deleted successfully");
 	    }
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment not found with ID: " + commentid);
+	}
+	
+	
+	@PutMapping("/comment/{commentid}")
+	@Tag(name="Update A Comment")
+	public ResponseEntity<CommentDTO> updateBlog(@PathVariable Long commentid, @Valid @RequestBody CommentDTO commentDTO) {
+		return ResponseEntity.ok(commentService.updateBlog(commentid, commentDTO));
 	}
 
 }

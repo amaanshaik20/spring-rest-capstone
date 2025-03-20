@@ -4,14 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class BlogDTO {
-	private int blogId;
-	
+	private Long blogId;
 	@NotBlank(message = "Title cannot be blank")
-    @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
+	@Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
 	private String blogTitle;
-	
 	@NotBlank(message = "Content cannot be blank")
-    @Size(min = 3, max = 200, message = "Content must be between 3 and 200 characters")
+	@Size(min = 3, max = 200, message = "Content must be between 3 and 200 characters")
 	private String blogContent;
 
 	public BlogDTO() {
@@ -24,18 +22,18 @@ public class BlogDTO {
 		this.blogContent = blogContent;
 	}
 
-	public BlogDTO(int blogId, String blogTitle, String blogContent) {
+	public BlogDTO(Long blogId, String blogTitle, String blogContent) {
 		super();
 		this.blogId = blogId;
 		this.blogTitle = blogTitle;
 		this.blogContent = blogContent;
 	}
 
-	public int getBlogId() {
+	public Long getBlogId() {
 		return blogId;
 	}
 
-	public void setBlogId(int blogId) {
+	public void setBlogId(Long blogId) {
 		this.blogId = blogId;
 	}
 
@@ -59,5 +57,4 @@ public class BlogDTO {
 	public String toString() {
 		return "BlogDTO [blogId=" + blogId + ", blogTitle=" + blogTitle + ", blogContent=" + blogContent + "]";
 	}
-
 }

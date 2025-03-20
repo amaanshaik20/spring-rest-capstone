@@ -15,6 +15,8 @@ import com.repository.BlogRepository;
 import com.repository.CommentRepository;
 import com.service.CommentService;
 
+import jakarta.validation.Valid;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 	private BlogRepository blogRepository;
@@ -34,8 +36,9 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	// Creates a new Comment to the blog and saves it to the repository
+	@Override
 	public CommentDTO addComment(CommentDTO commentDTO) {
-		int id = commentDTO.getBlogId();
+		Long id = commentDTO.getBlogId();
 		BlogEntity blog = blogRepository.findById(id)
 				.orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + id));
 
@@ -47,7 +50,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	// Retrieves all comments for a given blog ID
-	public List<String> getCommentsOf(int id) {
+	@Override
+	public List<String> getCommentsOf(Long id) {
 		BlogEntity blog = blogRepository.findById(id)
 				.orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + id));
 		List<String> commentsList = new ArrayList<>();
@@ -71,7 +75,8 @@ public class CommentServiceImpl implements CommentService {
 //	}
 
 	// deletes the comment taking commentid as parameter
-	public boolean deleteComment(int commentid) {
+	@Override
+	public boolean deleteComment(Long commentid) {
 		CommentEntity comment = commentRepo.findById(commentid)
 				.orElseThrow(() -> new CommentNotFoundException("Comment not found with ID: " + commentid));
 		System.out.println("Deleting Comment: " + comment);
@@ -79,6 +84,15 @@ public class CommentServiceImpl implements CommentService {
 		System.out.println("Comment deleted successfully!");
 		return true;
 
+	}
+	@Override
+	public CommentDTO updateBlog(Long commentid, @Valid CommentDTO commentDTO) {
+		// TODO Auto-generated method stub
+		CommentEntity comment = commentRepo.findById(commentid)
+				.orElseThrow(() -> new CommentNotFoundException("Comment not found with ID: " + commentid));
+        comment.setComment(commentDTO.getComment());
+        CommentEntity savedBlog = commentRepo.save(comment);
+        return convertToCommentDTO(savedBlog);
 	}
 
 }

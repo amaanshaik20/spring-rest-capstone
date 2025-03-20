@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class CommentEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer commentId;
+	private Long commentId;
 	@ManyToOne
 	@JoinColumn(name = "blogId")
 	private BlogEntity blogEntity;
@@ -27,10 +27,10 @@ public class CommentEntity {
 		this.comment=comment;
 		this.blogEntity=blogEntity;
 	}
-	public Integer getCommentId() {
+	public Long getCommentId() {
 		return commentId;
 	}
-	public void setCommentId(Integer commentId) {
+	public void setCommentId(Long commentId) {
 		this.commentId = commentId;
 	}
 	public BlogEntity getBlogEntity() {

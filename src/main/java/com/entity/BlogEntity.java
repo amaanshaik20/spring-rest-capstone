@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class BlogEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int blogId;
+	private Long blogId;
 	
 	private String blogTitle;
 	
@@ -37,7 +37,7 @@ public class BlogEntity {
 		this.blogContent = blogContent;
 	}
 	
-	public BlogEntity(int blogId, String blogTitle, String blogContent) {
+	public BlogEntity(Long blogId, String blogTitle, String blogContent) {
 		super();
 		this.blogId = blogId;
 		this.blogTitle = blogTitle;
@@ -47,11 +47,11 @@ public class BlogEntity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getBlogId() {
+	public Long getBlogId() {
 		return blogId;
 	}
 
-	public void setBlogId(int blogId) {
+	public void setBlogId(Long blogId) {
 		this.blogId = blogId;
 	}
 

@@ -3,8 +3,8 @@ package com.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public class CommentDTO {
-	private Integer commentId;
-	private int blogId;
+	private Long commentId;
+	private Long blogId;
 	@NotBlank(message = "Comment cannot be blank")
 	private String comment;
 	
@@ -13,7 +13,7 @@ public class CommentDTO {
 	}
 	
 	
-	public CommentDTO(int blogId, String comment) {
+	public CommentDTO(Long blogId, String comment) {
 		super();
 		this.blogId = blogId;
 		this.comment = comment;
@@ -21,7 +21,7 @@ public class CommentDTO {
 	
 	
 
-	public CommentDTO(Integer commentId, int blogId, String comment) {
+	public CommentDTO(Long commentId, Long blogId, String comment) {
 		super();
 		this.commentId = commentId;
 		this.comment = comment;
@@ -31,22 +31,22 @@ public class CommentDTO {
 	
 
 
-	public Integer getCommentId() {
+	public Long getCommentId() {
 		return commentId;
 	}
 
 
-	public void setCommentId(Integer commentId) {
+	public void setCommentId(Long commentId) {
 		this.commentId = commentId;
 	}
 
 
-	public int getBlogId() {
+	public Long getBlogId() {
 		return blogId;
 	}
 
 
-	public void setBlogId(int blogId) {
+	public void setBlogId(Long blogId) {
 		this.blogId = blogId;
 	}
 
@@ -54,19 +54,12 @@ public class CommentDTO {
 	public String getComment() {
 		return comment;
 	}
-
-
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-
-
 	@Override
 	public String toString() {
 		return "CommentDTO [commentId=" + commentId + ", blogId=" + blogId + ", comment=" + comment + "]";
 	}
-	
-	
-	
 	
 }
