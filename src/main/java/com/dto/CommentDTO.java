@@ -1,11 +1,9 @@
 package com.dto;
 
-import com.entity.BlogEntity;
-
 public class CommentDTO {
 	
 	private Integer commentId;
-	private BlogEntity blogEntity;
+	private BlogDTO blogDTO;
 	private String comment;
 	
 	public CommentDTO() {
@@ -13,28 +11,50 @@ public class CommentDTO {
 	}
 	
 	
-	public CommentDTO(BlogEntity blogEntity, String comment) {
+	public CommentDTO(BlogDTO blogDTO, String comment) {
 		super();
-		this.blogEntity = blogEntity;
+		this.blogDTO = blogDTO;
 		this.comment = comment;
 	}
+	
+	
+
+	public CommentDTO(Integer commentId, BlogDTO blogDTO, String comment) {
+		super();
+		this.commentId = commentId;
+		this.blogDTO = blogDTO;
+		this.comment = comment;
+	}
+
+
+	
 
 
 	public Integer getCommentId() {
 		return commentId;
 	}
+
+
 	public void setCommentId(Integer commentId) {
 		this.commentId = commentId;
 	}
-	public BlogEntity getBlogEntity() {
-		return blogEntity;
+
+
+	public BlogDTO getBlogDTO() {
+		return blogDTO;
 	}
-	public void setBlogEntity(BlogEntity blogEntity) {
-		this.blogEntity = blogEntity;
+
+
+	public void setBlogDTO(BlogDTO blogDTO) {
+		this.blogDTO = blogDTO;
 	}
+
+
 	public String getComment() {
 		return comment;
 	}
+
+
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
@@ -42,7 +62,7 @@ public class CommentDTO {
 
 	@Override
 	public String toString() {
-		return "CommentDTO [commentId=" + commentId + ", blogEntity=" + blogEntity + ", comment=" + comment + "]";
+		return "CommentDTO [commentId=" + commentId + ", blogDTO=" + blogDTO + ", comment=" + comment + "]";
 	}
 	
 	

@@ -23,6 +23,7 @@ public class BlogEntity {
 	private String blogContent;
 	@OneToMany(mappedBy = "blogEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<CommentEntity> commentsList;
+	
 	public List<CommentEntity> getCommentsList() {
 		return commentsList;
 	}
@@ -32,6 +33,13 @@ public class BlogEntity {
 	
 	public BlogEntity(String blogTitle, String blogContent) {
 		super();
+		this.blogTitle = blogTitle;
+		this.blogContent = blogContent;
+	}
+	
+	public BlogEntity(int blogId, String blogTitle, String blogContent) {
+		super();
+		this.blogId = blogId;
 		this.blogTitle = blogTitle;
 		this.blogContent = blogContent;
 	}

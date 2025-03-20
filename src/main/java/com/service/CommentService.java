@@ -1,8 +1,15 @@
 package com.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class CommentService {
+import com.dto.CommentDTO;
+
+public interface CommentService {
+	public CommentDTO addComment(CommentDTO commentDTO);
+
+	public List<String> getCommentsOf(int id);
+
 	
+	public boolean deleteComment(int commentid);
+
 }
