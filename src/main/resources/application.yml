@@ -2,7 +2,7 @@ server:
  port: 8007
 spring:
  profiles:
-  active: user
+  active: dev
  datasource:
   url: jdbc:mysql://localhost:3306/capstone
   username: root

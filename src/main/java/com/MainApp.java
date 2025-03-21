@@ -3,31 +3,11 @@ package com;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+// Marks this class as the main entry point of the Spring Boot application
+@SpringBootApplication // Enables auto-configuration, component scanning, and Spring Boot features
 public class MainApp {
-
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// Launches the Spring Boot application
 		SpringApplication.run(MainApp.class, args);
-
 	}
-	
-//	@Autowired
-//	BlogRepository blogRepo;
-//	@Autowired
-//	CommentRepository commentRepo;
-//
-//	@PostConstruct
-//	public void methods() {
-//		BlogEntity blogEntity = new BlogEntity("Spring AND USES", "core");
-//		blogEntity = blogRepo.save(blogEntity);
-//		System.out.println("blog added with id " + blogEntity.getBlogId());
-//
-//		CommentEntity c1 = new CommentEntity("Good blog of spring", blogEntity);
-//		CommentEntity c2 = new CommentEntity("Good UI of spring", blogEntity);
-//		commentRepo.save(c1);
-//		commentRepo.save(c2);
-//		System.out.println("comments added with ids " + c1.getCommentId() + " & " + c2.getCommentId());
-
-//	}
 }

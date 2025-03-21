@@ -2,90 +2,97 @@ package com.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import com.dto.BlogDTO;
 import com.entity.BlogEntity;
 import com.exception.BlogNotFoundException;
+import com.exception.CustomException;
 import com.repository.BlogRepository;
 import com.service.BlogService;
 
-@Service 
-@Validated 
+@Service // Marks this class as a service component in Spring
 public class BlogServiceImpl implements BlogService {
 
-	// Automatically injects the BlogRepository instance
-    @Autowired 
-    private BlogRepository blogRepository;
-    
-    // Constructor-based injection for BlogRepository
-    
-    public BlogServiceImpl(BlogRepository blogRepository) {
-        this.blogRepository = blogRepository;
-    }
+	private BlogRepository blogRepository;
 
-    // Fetches all blogs and converts them to DTO format
-    @Override
-    public List<BlogDTO> getAllBlogs() {
-        List<BlogDTO> blogList = new ArrayList<>();
-        List<BlogEntity> list = blogRepository.findAll();
-        for (BlogEntity en : list) {
-            blogList.add(convertToDTO(en));
-        }
-        return blogList;
-    }
+	// Constructor-based dependency injection for BlogRepository
+	public BlogServiceImpl(BlogRepository blogRepository) {
+		this.blogRepository = blogRepository;
+	}
 
-    // Fetches a blog by its ID, throws exception if not found
-    @Override
-    public BlogDTO getBlogById(Long blogId) {
-        Optional<BlogEntity> list = blogRepository.findById(blogId);
-        return list.map(e -> new BlogDTO(e.getBlogId(), e.getBlogTitle(), e.getBlogContent()))
-                .orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + blogId));
-    }
+	// Fetches all blogs from the database and converts them to DTO format
+	@Override
+	public List<BlogDTO> getAllBlogs() {
+		List<BlogDTO> blogList = new ArrayList<>();
+		List<BlogEntity> list = blogRepository.findAll(); // Retrieves all blog entities
+		for (BlogEntity en : list) {
+			blogList.add(convertToDTO(en)); // Converts each entity to DTO
+		}
+		return blogList;
+	}
 
-    // Converts BlogEntity to BlogDTO
-    
-    private BlogDTO convertToDTO(BlogEntity blogEntity) {
-        return new BlogDTO(blogEntity.getBlogId(), blogEntity.getBlogTitle(), blogEntity.getBlogContent());
-    }
+	// Fetches a blog by its ID, throws an exception if not found
+	@Override
+	public BlogDTO getBlogById(Long blogId) {
+		if (blogId < 0) {
+			throw new CustomException("Blog ID cannot be negative");
+		}
+		// Retrieves the blog or throws an exception if it doesn't exist
+		BlogEntity blog = blogRepository.findById(blogId)
+				.orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + blogId));
+		return new BlogDTO(blog.getBlogId(), blog.getBlogTitle(), blog.getBlogContent());
+	}
 
-    // Creates a new blog and saves it to the repository
-    @Override
-    public BlogDTO createBlog(BlogDTO blogDto) {
-        BlogEntity blogEntity = new BlogEntity();
-        blogEntity.setBlogTitle(blogDto.getBlogTitle());
-        blogEntity.setBlogContent(blogDto.getBlogContent());
-        BlogEntity savedBlog = blogRepository.save(blogEntity);
-        return new BlogDTO(savedBlog.getBlogId(), savedBlog.getBlogTitle(), savedBlog.getBlogContent());
-    }
+	// Converts BlogEntity to BlogDTO for data transfer
+	private BlogDTO convertToDTO(BlogEntity blogEntity) {
+		return new BlogDTO(blogEntity.getBlogId(), blogEntity.getBlogTitle(), blogEntity.getBlogContent());
+	}
 
-    // Updates an existing blog, throws exception if not found
-    @Override
-    public BlogDTO updateBlog(Long id, BlogDTO blogDTO) {
-        BlogEntity blog = blogRepository.findById(id)
-                .orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + id));
-        blog.setBlogTitle(blogDTO.getBlogTitle());
-        blog.setBlogContent(blogDTO.getBlogContent());
-        BlogEntity savedBlog = blogRepository.save(blog);
-        return convertToDTO(savedBlog);
-    }
+	// Creates a new blog and saves it to the database
+	@Override
+	public BlogDTO createBlog(BlogDTO blogDto) {
+		BlogEntity blogEntity = new BlogEntity();
+		blogEntity.setBlogTitle(blogDto.getBlogTitle());
+		blogEntity.setBlogContent(blogDto.getBlogContent());
 
-    
-    // Deletes a blog by its ID, throws exception if not found
-    @Override
-    public boolean deleteBlog(Long id) {
-        BlogEntity blog = blogRepository.findById(id)
-                .orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + id));
-        blogRepository.deleteById(blog.getBlogId());
-        return true;
-    }
-    
+		// Saves the blog entity and returns the saved data as a DTO
+		BlogEntity savedBlog = blogRepository.save(blogEntity);
+		return new BlogDTO(savedBlog.getBlogId(), savedBlog.getBlogTitle(), savedBlog.getBlogContent());
+	}
 
-    
+	// Updates an existing blog, throws an exception if the blog doesn't exist
+	@Override
+	public BlogDTO updateBlog(Long id, BlogDTO blogDTO) {
+		if (id < 0) {
+			throw new CustomException("Blog ID cannot be negative");
+		}
+		// Finds the blog to update or throws an exception if it's not found
+		BlogEntity blog = blogRepository.findById(id)
+				.orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + id));
 
-    
+		// Updates blog fields
+		blog.setBlogTitle(blogDTO.getBlogTitle());
+		blog.setBlogContent(blogDTO.getBlogContent());
+
+		// Saves the updated blog
+		BlogEntity savedBlog = blogRepository.save(blog);
+		return convertToDTO(savedBlog);
+	}
+
+	// Deletes a blog by its ID, throws an exception if the blog is not found
+	@Override
+	public boolean deleteBlog(Long id) {
+		if (id < 0) {
+			throw new CustomException("Blog ID cannot be negative");
+		}
+		// Retrieves the blog or throws an exception if it doesn't exist
+		BlogEntity blog = blogRepository.findById(id)
+				.orElseThrow(() -> new BlogNotFoundException("Blog not found with ID: " + id));
+
+		// Deletes the blog
+		blogRepository.deleteById(blog.getBlogId());
+		return true;
+	}
 }
